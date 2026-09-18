@@ -1,184 +1,461 @@
-# Darukaa.Earth — AI Biodiversity & Environmental Intelligence RAG System
+# Darukaa.Earth — AI Biodiversity & Environmental Intelligence
 
-An AI-powered environmental reasoning engine built for the **Darukaa.Earth AI Biodiversity Intelligence Chatbot Challenge**.
+An AI-powered environmental reasoning system built for the **Darukaa.Earth AI Biodiversity Intelligence Chatbot Challenge**.
 
-Unlike generic LLM chatbots, this system behaves as an **AI Environmental Scientist**. It connects **Soil Health, Water Availability, Land Cover, Climate Factors, and Human Impacts** to generate actionable, non-obvious recommendations supported by scientific reasoning, quantifiable metrics, and references (FAO, IPCC, COP16 IETA, UN CBD).
+Darukaa.Earth is designed to behave as an **AI environmental scientist**, combining multiple environmental variables with a retrieval-augmented knowledge system to generate actionable, evidence-backed recommendations for improving biodiversity and ecosystem health.
 
----
-
-## 🌟 Core Features
-
-- **Multi-Variable Reasoning Engine**: Simultaneously analyzes Soil Organic Carbon (SOC %), rainfall, crop/land cover type, regional microclimates, and species richness.
-- **Dual-Mode RAG Architecture**:
-  1. **Vertex AI Search & Discovery Engine**: Connects to Google Cloud Storage indexed environmental PDF reports.
-  2. **Grounded Scientific Knowledge Base**: Built-in RAG dataset parsed from FAO, IPCC, COP16 IETA, and semi-arid land management studies.
-- **Evidence-Backed Recommendations**: Every response provides:
-  - 🌿 Actionable Recommendation
-  - 🔬 Bio-geochemical Reasoning (e.g., mycorrhizal fungi, nitrogen fixation, soil percolation)
-  - 📈 Impacted Metrics (% measurable change over time)
-  - ⏱️ Implementation Horizon & Confidence Score (%)
-  - 📚 Scientific Grounding & Literature Citations
-  - ❓ Recommended Clarifications (for incomplete user parameters)
-- **Flexible Inputs**: Text chat interface + structured environmental parameter controls (SOC %, Rainfall, Land use, Geo-coordinates).
+The system connects **soil health, water availability, land use, climate conditions, biodiversity indicators, and human impacts** rather than treating each variable independently.
 
 ---
 
-## 🏗️ Architecture Overview
+## What It Does
 
+Given natural-language and structured environmental inputs, Darukaa.Earth:
+
+* Understands environmental conditions and user objectives
+* Retrieves relevant scientific knowledge from a dedicated RAG layer
+* Connects multiple environmental variables to identify relationships and constraints
+* Generates actionable interventions rather than generic sustainability advice
+* Explains the scientific mechanism behind each recommendation
+* Identifies which environmental metrics are expected to change
+* Provides an implementation time horizon and confidence estimate
+* Asks follow-up questions when important environmental parameters are missing
+* Maintains conversational context across multiple turns
+
+---
+
+## Core Capabilities
+
+### Multi-Metric Environmental Reasoning
+
+The system evaluates environmental variables together, including:
+
+* Soil organic carbon
+* Soil pH
+* Soil moisture
+* Rainfall
+* Temperature
+* Land use / land cover
+* Species richness
+* Habitat diversity
+* Pollution
+* Deforestation and other human impacts
+
+For example:
+
+```text
+Low soil organic carbon
+        +
+Low rainfall
+        +
+Monoculture agriculture
+        +
+Semi-arid climate
+        ↓
+Reduced soil resilience
+        ↓
+Lower habitat and resource diversity
+        ↓
+Biodiversity pressure
+        ↓
+Targeted intervention
 ```
-+-------------------------------------------------------------------------+
-|                        Next.js 15 Frontend                              |
-|   (Interactive Chat Interface + Structured Parameter Drawer + Presets)  |
-+-------------------------------------------------------------------------+
-                                    |
-                                    v
-+-------------------------------------------------------------------------+
-|                      Next.js API Route (/api/chat)                      |
-+-------------------------------------------------------------------------+
-                                    |
-       +----------------------------+----------------------------+
-       |                                                         |
-       v                                                         v
-+-----------------------------+                           +-----------------------------+
-| GCP Vertex AI Search        |                           | Grounded Scientific         |
-| (Discovery Engine API)      |                           | Knowledge Base (RAG)        |
-| *Indexed PDF Reports        |                           | *FAO, IPCC, COP16, CBD      |
-+-----------------------------+                           +-----------------------------+
-       \                                                         /
-        \                                                       /
-         v                                                     v
-+-------------------------------------------------------------------------+
-|                        Google Gemini 2.0 Flash                          |
-|         (Scientific Reasoning, Synthesis & Follow-up Inquiries)         |
-+-------------------------------------------------------------------------+
+
+This multi-variable reasoning is a core part of the system rather than a single-variable recommendation engine.
+
+---
+
+## Knowledge & RAG System
+
+Darukaa.Earth uses a dedicated knowledge layer rather than relying solely on an LLM prompt.
+
+### Retrieval Pipeline
+
+```text
+User Query + Environmental Parameters
+                │
+                ▼
+        Query Understanding
+                │
+                ▼
+       Knowledge Retrieval
+          ┌─────┴─────┐
+          ▼           ▼
+   Vertex AI Search   Scientific
+   / Discovery       Knowledge Base
+      Engine
+          │           │
+          └─────┬─────┘
+                ▼
+        Retrieved Evidence
+                │
+                ▼
+       Gemini Reasoning Layer
+                │
+                ▼
+    Multi-Metric Recommendation
+                │
+                ▼
+   Evidence + Metrics + Time Horizon
+```
+
+### Knowledge Sources
+
+The knowledge layer includes research and reports covering:
+
+* Soil and land management
+* Biodiversity
+* Climate impacts
+* Carbon and nature markets
+* Semi-arid ecosystems
+* Biodiversity conservation
+* Adaptation and environmental management
+
+Sources include material from organizations such as:
+
+* Food and Agriculture Organization (FAO)
+* Intergovernmental Panel on Climate Change (IPCC)
+* Convention on Biological Diversity (UN CBD)
+* COP16 biodiversity-related reports
+* Environmental and land-management research
+
+---
+
+## Evidence-Backed Recommendations
+
+Recommendations are structured around four questions:
+
+### 1. What should be done?
+
+A specific intervention rather than a generic sustainability statement.
+
+### 2. Why should it work?
+
+The system explains the underlying ecological or biogeochemical mechanism.
+
+### 3. What changes?
+
+Relevant environmental metrics are identified, such as:
+
+* Soil organic carbon
+* Soil moisture
+* Species richness
+* Habitat diversity
+* Water availability
+* Pollinator abundance
+
+### 4. When should an effect be expected?
+
+Recommendations include an implementation horizon:
+
+* Short term
+* Medium term
+* Long term
+
+Where sufficient evidence exists, the response also provides quantitative estimates and their supporting source.
+
+---
+
+## Example Reasoning
+
+### Input
+
+```text
+Soil organic carbon: 0.3%
+Rainfall: Low
+Crop: Monoculture wheat
+Region: Semi-arid
+```
+
+### Reasoning
+
+The system can connect:
+
+```text
+Low SOC
+  ↓
+Lower soil structure and water retention
+
+Low rainfall
+  ↓
+High water limitation
+
+Monoculture
+  ↓
+Low habitat and resource diversity
+
+Semi-arid climate
+  ↓
+High sensitivity to soil moisture loss
+```
+
+The resulting recommendation can therefore consider interventions such as **intercropping, cover crops, or agroforestry**, depending on the retrieved evidence and environmental context.
+
+The response explains the mechanisms involved and identifies the environmental metrics that the intervention is expected to influence.
+
+---
+
+## Conversational Intelligence
+
+The system supports multi-turn environmental conversations.
+
+For incomplete inputs, it can request the parameters required for meaningful reasoning.
+
+### Example
+
+**User:**
+
+> Biodiversity is declining on my land.
+
+**System:**
+
+> To identify likely drivers, provide your approximate soil organic carbon, rainfall pattern, land-use type, and region. If available, also provide soil pH and recent changes in vegetation or species richness.
+
+The system then uses the information supplied in subsequent turns as conversational context.
+
+---
+
+## Input Handling
+
+### Natural Language
+
+```text
+"Biodiversity has declined on my farm after several years
+of monoculture wheat cultivation."
+```
+
+### Structured Input
+
+```json
+{
+  "soilOrganicCarbon": 0.3,
+  "rainfall": "low",
+  "crop": "wheat",
+  "landUse": "monoculture",
+  "region": "semi-arid"
+}
+```
+
+### Spatial Context
+
+The system can also accept geographic coordinates where available, allowing environmental recommendations to incorporate regional context.
+
+---
+
+## Response Structure
+
+Responses are organized into clear sections:
+
+```text
+Recommendation
+────────────────────────
+Specific action to take
+
+Scientific Reasoning
+────────────────────────
+Why the intervention should work
+
+Impacted Metrics
+────────────────────────
+• Soil organic carbon
+• Soil moisture
+• Biodiversity / habitat indicators
+
+Time Horizon
+────────────────────────
+Short / Medium / Long term
+
+Confidence
+────────────────────────
+Confidence based on available evidence
+
+Scientific Evidence
+────────────────────────
+Relevant reports, studies, or datasets
+
+Clarifications
+────────────────────────
+Additional parameters required, if any
 ```
 
 ---
 
-## 🛠️ Technology Stack
+## Architecture
 
-- **Framework**: Next.js 15 (App Router, Turbopack, React 18, TypeScript)
-- **AI & RAG Engine**: `@google/genai` (Gemini 2.0 Flash), `@google-cloud/vertexai` (Discovery Engine)
-- **UI Components**: TailwindCSS, Radix UI primitives, Lucide React icons, Framer/Animate
-- **Deployment**: Vercel / Render / Google Cloud Run / Railway / Netlify
+```text
+┌──────────────────────────────────────────────────────────────┐
+│                     Next.js 15 Frontend                      │
+│                                                              │
+│  Conversational Interface + Structured Environmental Inputs  │
+└──────────────────────────────┬───────────────────────────────┘
+                               │
+                               ▼
+┌──────────────────────────────────────────────────────────────┐
+│                    Next.js API /api/chat                     │
+│                                                              │
+│        Query Processing + Context + RAG Orchestration        │
+└──────────────────────────────┬───────────────────────────────┘
+                               │
+                ┌──────────────┴──────────────┐
+                │                             │
+                ▼                             ▼
+┌───────────────────────────┐   ┌──────────────────────────────┐
+│ Vertex AI Search          │   │ Scientific Knowledge Base    │
+│ / Discovery Engine        │   │                              │
+│                           │   │ Curated environmental        │
+│ Indexed research reports  │   │ knowledge and evidence       │
+└──────────────┬────────────┘   └──────────────┬───────────────┘
+               │                               │
+               └───────────────┬───────────────┘
+                               ▼
+                ┌─────────────────────────────┐
+                │       Google Gemini         │
+                │                             │
+                │ Scientific Reasoning        │
+                │ Evidence Synthesis          │
+                │ Recommendation Generation   │
+                └──────────────┬──────────────┘
+                               │
+                               ▼
+                ┌─────────────────────────────┐
+                │ Structured Environmental    │
+                │ Recommendation              │
+                └─────────────────────────────┘
+```
 
 ---
 
-## 🚀 Environment Variables & Configuration
+## Technology Stack
 
-Create a `.env.local` file in the root directory (refer to `.env.example`):
+| Component       | Technology                               |
+| --------------- | ---------------------------------------- |
+| Frontend        | Next.js 15, React, TypeScript            |
+| Styling         | Tailwind CSS                             |
+| UI Components   | Radix UI, Lucide React                   |
+| Reasoning Model | Google Gemini                            |
+| Retrieval       | Vertex AI Search / Discovery Engine      |
+| Knowledge Layer | Curated scientific environmental dataset |
+| Deployment      | Vercel / Google Cloud Run                |
+
+---
+
+## Project Structure
+
+```text
+darukaa-bio-knowledge-rag/
+├── files/                         # Environmental research documents
+│
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   └── chat/
+│   │   │       └── route.ts       # RAG + chat API
+│   │   ├── page.tsx               # Main interface
+│   │   ├── layout.tsx
+│   │   └── globals.css
+│   │
+│   ├── components/
+│   │   ├── chat/
+│   │   │   └── chat-interface.tsx
+│   │   └── layout/
+│   │       ├── header.tsx
+│   │       └── footer.tsx
+│   │
+│   ├── lib/
+│   │   ├── gemini-client.ts       # Gemini integration
+│   │   ├── discoveryEngine.ts     # Vertex AI Search
+│   │   └── knowledgeBase.ts       # Scientific knowledge layer
+│   │
+│   └── types/
+│       └── chat.ts
+│
+├── .env.example
+├── .gitignore
+├── package.json
+├── next.config.ts
+├── tsconfig.json
+└── README.md
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+* Node.js 20+
+* npm
+* Gemini API key
+* Google Cloud project for Vertex AI Search integration
+
+### Installation
+
+```bash
+git clone https://github.com/sachi-gg/AI-Biodiversity-Intelligence-Chatbot-.git
+cd AI-Biodiversity-Intelligence-Chatbot-
+
+npm install
+```
+
+### Environment Variables
+
+Create `.env.local`:
 
 ```env
-# Required for Gemini 2.0 Flash Reasoning & RAG Synthesis
-GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_API_KEY=your_gemini_api_key
 
-# Optional: Google Cloud Vertex AI Search / Discovery Engine
-GCP_PROJECT_ID=194113201958
+# Vertex AI Search
+GCP_PROJECT_ID=your_project_id
 GCP_LOCATION=eu
 GCP_COLLECTION_ID=default_collection
-GCP_ENGINE_ID=darukaa-knowledge-hub-app_1747299091695
+GCP_ENGINE_ID=your_engine_id
 GCP_SERVING_CONFIG_ID=default_search
 ```
 
-> **Note**: The system is designed with a **fail-safe hybrid RAG architecture**. If GCP credentials are not present, it automatically uses the built-in grounded scientific knowledge base with `GEMINI_API_KEY`, allowing zero-friction deployment on Vercel or Render.
+Never commit `.env.local` or API credentials to the repository.
 
----
-
-## 💻 Local Setup & Installation
+### Run Locally
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/your-username/darukaa-bio-knowledge-rag.git
-cd darukaa-bio-knowledge-rag
-
-# 2. Install dependencies
-npm install
-
-# 3. Configure environment variables
-cp .env.example .env.local
-# Add your GEMINI_API_KEY in .env.local
-
-# 4. Start the development server
 npm run dev
 ```
 
-Open [http://localhost:9002](http://localhost:9002) in your browser.
+The application runs at:
 
----
-
-## 🌐 Hosting & Deployment Options
-
-### Option 1: Vercel (Recommended — 2-Minute Deployment)
-1. Push your repository to GitHub.
-2. Import the repository in [Vercel](https://vercel.com/).
-3. Add `GEMINI_API_KEY` under **Environment Variables**.
-4. Click **Deploy**.
-
-### Option 2: Render / Railway / Netlify
-- Build Command: `npm run build`
-- Start Command: `npm start`
-- Environment Variables: `GEMINI_API_KEY=your_key`
-
-### Option 3: Docker / Google Cloud Run
-```dockerfile
-FROM node:20-alpine AS builder
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-COPY . .
-RUN npm run build
-
-FROM node:20-alpine AS runner
-WORKDIR /app
-ENV NODE_ENV=production
-COPY --from=builder /app ./
-EXPOSE 3000
-CMD ["npm", "start"]
+```text
+http://localhost:9002
 ```
 
 ---
 
-## 📋 Files Included for GitHub Submission
+## Deployment
 
-```
-darukaa-bio-knowledge-rag/
-├── files/                              # Curated PDF Research Reports
-│   ├── forest_management_in_semi_arid_india.pdf
-│   ├── From_Carbon_to_Nature_2023_White_paper.pdf
-│   ├── IETA_Report_COP16-Biodiversity-Report.V3.pdf
-│   ├── NAP final-2023.pdf
-│   └── TheFutureOfBiodiversityCreditMarkets.pdf
-├── src/
-│   ├── app/
-│   │   ├── api/chat/route.ts           # Chat API Endpoint (Multi-variable RAG)
-│   │   ├── page.tsx                    # Main Web Interface
-│   │   ├── layout.tsx                  # Global App Layout
-│   │   └── globals.css                 # Styling
-│   ├── components/
-│   │   ├── chat/chat-interface.tsx     # Interactive UI with Structured Parameters
-│   │   ├── layout/header.tsx
-│   │   └── layout/footer.tsx
-│   ├── lib/
-│   │   ├── gemini-client.ts            # Gemini 2.0 Flash Reasoning SDK
-│   │   ├── discoveryEngine.ts          # GCP Vertex AI Search Integration
-│   │   └── knowledgeBase.ts            # Grounded Scientific RAG Dataset
-│   └── types/
-│       └── chat.ts                     # TypeScript Interfaces
-├── .env.example                        # Environment Variables Template
-├── .gitignore                          # Configured to ignore secrets & build outputs
-├── package.json                        # Dependencies & Scripts
-├── next.config.ts                      # Next.js Config
-├── tsconfig.json                       # TypeScript Config
-└── README.md                           # Documentation
-```
+### Vercel
+
+1. Push the repository to GitHub.
+2. Import the repository into Vercel.
+3. Configure the required environment variables.
+4. Deploy.
+
+For Vertex AI Search, the required Google Cloud credentials and configuration must also be available in the deployment environment.
 
 ---
 
-## 📝 Submission Checklist (.docx Submission)
+## Challenge Alignment
 
-When submitting through the Darukaa.Earth job portal, ensure your Word document includes:
-1. **GitHub Repository Link**: (Public or private with granted access to `ankita.dasgupta@darukaa.earth`, `harsh.kumar@darukaa.earth`, `utkarsh.gauniyal@darukaa.earth`, `guneet.mutreja@darukaa.earth`)
-2. **Live Demo URL**: (e.g. `https://darukaa-biodiversity-rag.vercel.app`)
-3. **README.md Overview**: Architecture, database/schema, local setup, CI/CD details.
-4. **Credentials & Instructions**: Notes on setting `GEMINI_API_KEY`.
->>>>>>> 104fae2 (Initial commit: Darukaa Bio Knowledge RAG system with TypeScript fixes)
+| Requirement                     | Implementation                                   |
+| ------------------------------- | ------------------------------------------------ |
+| Retrievable knowledge layer     | Vertex AI Search + scientific knowledge base     |
+| Soil health                     | SOC, pH, moisture                                |
+| Land use / land cover           | Structured environmental inputs                  |
+| Biodiversity indicators         | Species richness, habitat diversity              |
+| Climate                         | Rainfall, temperature, regional conditions       |
+| Human impacts                   | Pollution, deforestation and land-use context    |
+| Multi-variable reasoning        | Gemini reasoning across environmental parameters |
+| Clarifying questions            | Missing-parameter detection                      |
+| Multi-turn context              | Conversational state                             |
+| Evidence-backed recommendations | Retrieved scientific sources                     |
+| Structured input                | JSON/environmental parameter controls            |
+| Spatial context                 | Geographic coordinates                           |
+| Actionable outputs              | Recommendation + metrics + timeline              |
+| Scientific reasoning            | Biogeochemical and ecological explanations       |

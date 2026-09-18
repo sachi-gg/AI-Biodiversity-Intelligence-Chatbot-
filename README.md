@@ -440,6 +440,13 @@ http://localhost:9002
 For Vertex AI Search, the required Google Cloud credentials and configuration must also be available in the deployment environment.
 
 ---
+## Demo
+
+Watch the chatbot demonstration below.
+https://youtu.be/Dm8OH1adr5Q
+
+
+
 
 ## Challenge Alignment
 
